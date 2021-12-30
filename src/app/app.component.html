@@ -1,4 +1,7 @@
-<h2>Hunter Coin</h2>
+<div style="margin: 5px;">
+  <button (click)="fetch()">Cào</button>
+  <span style="margin-left: 10px;">{{ getStatus() }}</span>
+</div>
 
 <div class="tab">
   <button class="tablinks" *ngFor="let it of tabs" (click)="click(it)">
