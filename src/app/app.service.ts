@@ -7,16 +7,17 @@ import { fetch } from './data/fetch.ts';
 export class AppService {
   constructor(private http: HttpClient) {}
 
-  async fetch() {
+  async fetch(process: any) {
     const keys = _.keys(fetch.src);
     const z = _.get(fetch, 'size');
     const s = _.get(fetch, 'maxPage');
-    let b = [];
     let msgs = [];
+    let res = {};
     for (let i = 0; i < _.size(keys); i++) {
       const key = keys[i];
       const it = _.get(fetch.src, [key]);
       const itkeys = _.keys(it);
+      let b = [];
       for (let j = 0; j < _.size(itkeys); j++) {
         // c98
         const itkey = itkeys[j];
@@ -61,6 +62,7 @@ export class AppService {
                     return {
                       url: x + _.get(i, 'slug'),
                       date: c,
+                      createdAt: i.createdAt,
                     };
                   })
                 );
@@ -69,11 +71,14 @@ export class AppService {
           }
         }
       }
+      res[key] = JSON.stringify(b);
+
+      process.text = `${i + 1}/${_.size(keys)}`;
     }
-    b = _.reverse(b);
+
     // let c = _.join(b, '\n');
-    console.log('res', b);
-    console.log('error', msgs);
+    console.log('res', res);
+    console.log('msgs', msgs);
   }
 
   async fetch2() {

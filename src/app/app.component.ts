@@ -14,6 +14,9 @@ export class AppComponent {
   id: any;
   its: any;
   status: any; // 0: ẩn, 1 loading, 2 success
+  process: any = {
+    text: '',
+  };
   constructor(private appService: AppService) {
     console.log('data', data);
     this.tabs = _.keys(data);
@@ -26,7 +29,7 @@ export class AppComponent {
 
   fetch() {
     this.status = 1;
-    this.appService.fetch().then(() => {
+    this.appService.fetch(this.process).then(() => {
       this.status = 2;
       setTimeout(() => {
         this.status = 0;
@@ -36,7 +39,10 @@ export class AppComponent {
 
   getStatus() {
     if (this.status == 0) return '';
-    if (this.status == 1) return 'Loading ...';
-    if (this.status == 2) return 'OK';
+    if (this.status == 1) return 'Loading ' + this.process.text;
+    if (this.status == 2) {
+      this.process.text = '';
+      return 'OK';
+    }
   }
 }
