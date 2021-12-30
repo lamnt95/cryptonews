@@ -37,6 +37,16 @@ export class AppComponent {
     });
   }
 
+  fetchNewsMessariOfficial() {
+    this.status = 1;
+    this.appService.fetchNewsMessariOfficial(this.process).then(() => {
+      this.status = 2;
+      setTimeout(() => {
+        this.status = 0;
+      }, 1000);
+    });
+  }
+
   getStatus() {
     if (this.status == 0) return '';
     if (this.status == 1) return 'Loading ' + this.process.text;

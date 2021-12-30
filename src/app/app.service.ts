@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
 import { fetch } from './data/fetch.ts';
+import { fetchOfficialNewMessari } from './data/fetchMessariNews.ts';
 
 @Injectable()
 export class AppService {
@@ -81,26 +82,55 @@ export class AppService {
     console.log('msgs', msgs);
   }
 
-  async fetch2() {
-    let id = '618ca9dc6e02d29b6c43ce96';
-    let x = 'https://coin98.net/';
-    let y = 'https://insights.coin98.services/api/post/menu';
-    let z = 24;
-    let b = [];
-    for (let i = 0; i <= z; i++) {
-      let body = { page: i, size: z, locale: 'vn', id };
-      let a = await this.http.post(y, body).toPromise();
-      b = _.concat(
-        b,
-        _.map(_.get(a, 'data.data'), (i: any = {}) => {
-          return x + _.get(i, 'slug');
-        })
-      );
-    }
-    b = _.reverse(b);
-    let c = _.join(b, '\n');
-    console.log('test', c);
-  }
+  async fetchNewsMessariOfficial(process: any) {
+    const url = _.get(fetchOfficialNewMessari, 'url');
+    const body = _.get(fetchOfficialNewMessari, 'body') || {};
+    const body2 = { ...body };
 
-  async test() {}
+    let totalCount = 1000;
+    let startCursor = '0';
+    let data = [];
+    let endCursor = '0';
+    let i = 1;
+
+    _.set(body2, 'variables.after', startCursor);
+
+    while (_.toNumber(endCursor) < _.toNumber(totalCount) && i < 10) {
+      let a;
+      try {
+        a = await this.http.post(url, body2).toPromise();
+        const msg = `SUCCESS i=${i} start=${startCursor} tol=${totalCount} `;
+        console.log(msg);
+      } catch (e) {
+        const msg = `ERROR i=${i} start=${startCursor} tol=${totalCount} `;
+        console.log(msg);
+        console.log(e);
+      }
+
+      totalCount = _.get(a, 'data.aggregatedContents.totalCount');
+      endCursor = _.get(a, 'data.aggregatedContents.pageInfo.endCursor');
+      const data2 = _.get(a, 'data.aggregatedContents.edges');
+      if (endCursor != null && endCursor != undefined) {
+        startCursor = endCursor;
+        _.set(body2, 'variables.after', endCursor);
+      }
+      if (_.size(data2) > 0) {
+        const data3 = _.map(data2, (it: any = {}) => {
+          const url = _.get(it, 'node.link');
+          const createdAt = _.get(it, 'node.publishDate');
+          const a = new Date(createdAt);
+          const month = a.getMonth() + 1;
+          const date = a.getDate() + '-' + month + '-' + a.getFullYear();
+          return {
+            url,
+            date,
+            createdAt,
+          };
+        });
+        data = _.concat(data, data3);
+      }
+      i++;
+    }
+    console.log('res', data);
+  }
 }
