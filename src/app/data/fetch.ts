@@ -1,5 +1,6 @@
 export const fetch = {
-  size: 30,
+  size: 24,
+  maxPage: 10,
   src: {
     sol: {
       c98: {

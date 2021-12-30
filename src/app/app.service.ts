@@ -10,7 +10,9 @@ export class AppService {
   async fetch() {
     const keys = _.keys(fetch.src);
     const z = _.get(fetch, 'size');
+    const s = _.get(fetch, 'maxPage');
     let b = [];
+    let msgs = [];
     for (let i = 0; i < _.size(keys); i++) {
       const key = keys[i];
       const it = _.get(fetch.src, [key]);
@@ -23,32 +25,55 @@ export class AppService {
         const x = _.get(it, [itkey, 'res']);
         for (let k = 0; k < _.size(ids); k++) {
           const id = ids[k];
-          let body = { page: k, size: z, locale: 'vn', id };
           if (!_.isEmpty(id)) {
-            let a = await this.http.post(y, body).toPromise();
-            console.log(_.get(a, 'data.data'));
-            b = _.concat(
-              b,
-              _.map(_.get(a, 'data.data'), (i: any = {}) => {
-                let c = '';
-                if (i.createdAt != null && i.createdAt != undefined) {
-                  const a = new Date(i.createdAt);
-                  const month = a.getMonth() + 1;
-                  c = a.getDate() + '-' + month + '-' + a.getFullYear();
+            for (let p = 0; p <= s; p++) {
+              let body = { page: p, size: z, locale: 'vn', id };
+              let a;
+              try {
+                a = await this.http.post(y, body).toPromise();
+              } catch (e) {
+                const msg = `error p = ${p} id = ${id} , k = ${k} ,  itkey = ${itkey} ,  j = ${j} , key = ${key} ,  i = ${i} `;
+                console.log(msg);
+                msgs.push(msg);
+              }
+
+              const ares = _.get(a, 'data.data');
+              if (_.size(ares) == 0) {
+                const msg = `NO DATA p = ${p} id = ${id} , k = ${k} ,  itkey = ${itkey} ,  j = ${j} , key = ${key} ,  i = ${i} `;
+                console.log(msg);
+                msgs.push(msg);
+                if (p > 3) {
+                  break;
                 }
-                return {
-                  url: x + _.get(i, 'slug'),
-                  date: c,
-                };
-              })
-            );
+              }
+              if (!_.isEmpty(ares)) {
+                const msg = `HAVE DATA p = ${p} id = ${id} , k = ${k} ,  itkey = ${itkey} ,  j = ${j} , key = ${key} ,  i = ${i} `;
+                console.log(msg, ares);
+                b = _.concat(
+                  b,
+                  _.map(_.get(a, 'data.data'), (i: any = {}) => {
+                    let c = '';
+                    if (i.createdAt != null && i.createdAt != undefined) {
+                      const a = new Date(i.createdAt);
+                      const month = a.getMonth() + 1;
+                      c = a.getDate() + '-' + month + '-' + a.getFullYear();
+                    }
+                    return {
+                      url: x + _.get(i, 'slug'),
+                      date: c,
+                    };
+                  })
+                );
+              }
+            }
           }
         }
       }
     }
     b = _.reverse(b);
     // let c = _.join(b, '\n');
-    console.log('test', b);
+    console.log('res', b);
+    console.log('error', msgs);
   }
 
   async fetch2() {
