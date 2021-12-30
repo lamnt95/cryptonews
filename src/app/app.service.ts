@@ -130,6 +130,8 @@ export class AppService {
         data = _.concat(data, data3);
       }
       i++;
+      const pct = _.round((_.toNumber(startCursor) / totalCount) * 100);
+      process.text = `${pct}/100`;
     }
     console.log('res', data);
   }
