@@ -12,6 +12,7 @@ import { eth } from './eth.ts';
 import { cosmos } from './cosmos.ts';
 import { terra } from './terra.ts';
 import { week } from './week.ts';
+import { messariOfficialNew } from './messariOfficialNew.ts';
 
 export const data = {
   sol,
@@ -28,4 +29,5 @@ export const data = {
   kn,
   nangcao,
   week,
+  messari: messariOfficialNew,
 };

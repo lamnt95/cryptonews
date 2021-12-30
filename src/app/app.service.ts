@@ -95,7 +95,7 @@ export class AppService {
 
     _.set(body2, 'variables.after', startCursor);
 
-    while (_.toNumber(endCursor) < _.toNumber(totalCount) && i < 10) {
+    while (_.toNumber(endCursor) < _.toNumber(totalCount)) {
       let a;
       try {
         a = await this.http.post(url, body2).toPromise();
@@ -133,6 +133,7 @@ export class AppService {
       const pct = _.round((_.toNumber(startCursor) / totalCount) * 100);
       process.text = `${pct}/100`;
     }
-    console.log('res', data);
+    const res = JSON.stringify(data);
+    console.log('res', res);
   }
 }
