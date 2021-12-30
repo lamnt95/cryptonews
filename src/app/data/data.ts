@@ -10,11 +10,13 @@ import { polygon } from './polygon.ts';
 import { sol } from './sol.ts';
 import { eth } from './eth.ts';
 import { cosmos } from './cosmos.ts';
+import { terra } from './terra.ts';
 
 export const data = {
   sol,
   bsc,
   avax,
+  terra,
   eth,
   near,
   ftm,
