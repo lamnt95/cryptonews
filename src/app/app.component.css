@@ -64,3 +64,7 @@ body {
   left: 0; /*Nằm sát bên trái*/
   z-index: 100000; /*Hiển thị lớp trên cùng*/
 }
+
+p {
+  margin: 0px;
+}
