@@ -1,2 +1,13 @@
-<h1>Hunter Coin</h1>
-<mat-slider min="1" max="100" step="1" value="50"></mat-slider>
+<h2>Hunter Coin</h2>
+
+<div class="tab">
+  <button class="tablinks" *ngFor="let it of tabs" (click)="click(it)">
+    {{ it }}
+  </button>
+</div>
+<div class="tabcontent">
+  <div style="margin: 5px;" *ngFor="let item of its">
+    <span style="margin-right: 10px;">{{ item.date }}</span>
+    <a [href]="item.url">{{ item.url }}</a>
+  </div>
+</div>
