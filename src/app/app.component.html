@@ -1,4 +1,4 @@
-<div style="margin: 5px;" >
+<div style="margin: 5px;" id="tophead">
   <button (click)="fetch()">Cào</button>
   <span style="margin-left: 10px;">{{ getStatus() }}</span>
 </div>
@@ -6,6 +6,9 @@
 <div class="tab">
   <button class="tablinks" *ngFor="let it of tabs" (click)="click(it)">
     {{ it }}
+  </button>
+  <button>
+    <a href="#tophead">Go Top</a>
   </button>
 </div>
 
