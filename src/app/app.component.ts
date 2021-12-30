@@ -45,4 +45,8 @@ export class AppComponent {
       return 'OK';
     }
   }
+
+  isActive(it) {
+    return this.id == it;
+  }
 }

@@ -4,7 +4,12 @@
 </div>
 
 <div class="tab" id="fixNav">
-  <button class="tablinks" *ngFor="let it of tabs" (click)="click(it)">
+  <button
+    [ngClass]="{ activeTab: isActive(it) }"
+    class="tablinks"
+    *ngFor="let it of tabs"
+    (click)="click(it)"
+  >
     {{ it }}
   </button>
   <button>
