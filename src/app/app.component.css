@@ -49,4 +49,18 @@ body {
   border: 1px solid #ccc;
   width: 80%;
   border-left: none;
+  margin-left: 100px;
+}
+.activeTab {
+  background-color: #29414b !important;
+}
+
+#fixNav {
+  width: 100px;
+  display: block;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5); /*Đổ bóng cho menu*/
+  position: fixed; /*Cho menu cố định 1 vị trí với top và left*/
+  top: 100; /*Nằm trên cùng*/
+  left: 0; /*Nằm sát bên trái*/
+  z-index: 100000; /*Hiển thị lớp trên cùng*/
 }
