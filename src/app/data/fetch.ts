@@ -75,7 +75,7 @@ export const fetch = {
     other: {
       c98: {
         url: 'https://insights.coin98.services/api/post/menu',
-        id: [],
+        id: ['618caa718926839b534ef118'],
         res: 'https://coin98.net/',
       },
     },
@@ -84,6 +84,14 @@ export const fetch = {
         url: 'https://insights.coin98.services/api/post/menu',
         // kn
         id: ['618cac49745ec09b45cfe68c'],
+        res: 'https://coin98.net/',
+      },
+    },
+    weekly: {
+      c98: {
+        url: 'https://insights.coin98.services/api/post/menu',
+        // kn
+        id: ['618cb1180b3eb09bbd0f01f6'],
         res: 'https://coin98.net/',
       },
     },
