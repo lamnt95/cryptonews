@@ -11,6 +11,7 @@ import { sol } from './sol.ts';
 import { eth } from './eth.ts';
 import { cosmos } from './cosmos.ts';
 import { terra } from './terra.ts';
+import { week } from './week.ts';
 
 export const data = {
   sol,
@@ -26,4 +27,5 @@ export const data = {
   other,
   kn,
   nangcao,
+  week,
 };
